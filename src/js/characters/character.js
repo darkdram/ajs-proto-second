@@ -19,10 +19,29 @@ class Character {
         this.name = name;
         this.type = type;
 
-        this.attack = undefined;
-        this.defence = undefined;
-        this.level = undefined;
-        this.health = undefined;
+        this.level = 1;
+        this.attack = 1;
+        this.defence = 1;
+        this.health = 100;
+    }
+
+
+    levelUp() {
+        if (this.health <= 0) {
+            throw new Error('cannot level up of defeated character')
+        } else {
+            this.level++;
+            this.attack *= 1.2;
+            this.defence *= 1.2;
+            this.health = 100;
+        }
+    }
+
+    damage(points) {
+        if (this.health > 0) {
+            this.health -= points * (1 - this.defence / 100)
+            this.health = Math.max(0, this.health) // меньше нуля тоже быть не может, поэтому зануляем в случае, если полученный урон >= уровня здоровья
+        }
     }
 }
 
